@@ -2,9 +2,8 @@
   "name": "lazy-scaffolding",
   "version": "0.1.0",
   "description": "A command line scaffolding engine for any kind of project",
-  "main": "index.js",
   "bin": {
-    "lazy": "./lazy.js"
+    "lazy": "lazy.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -6,7 +6,7 @@
 ## Installation
 
 ```sh
-$ npm install -g lazy
+$ npm install -g lazy-scaffolding
 ```
 
 ## Usage
