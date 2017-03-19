@@ -4,11 +4,18 @@
 
 'use strict';
 
+const consolidate = require('consolidate');
 const fs = require('fs');
 const program = require('commander');
 const cwd = process.cwd();
 
 console.log('\n  lazy generate\n');
+
+if (!fs.existsSync(`${cwd}/.lazy`)) {
+  console.log(`  Lazy project folder not found, please execute: lazy init`);
+  process.exit(1);
+}
+const lazySettings = JSON.parse(fs.readFileSync(`${cwd}/.lazy/lazy-settings.json`));
 
 program.parse(process.argv);
 
@@ -49,17 +56,27 @@ for (let file in templateSettings.outputs) {
 
   console.log(`  Creating ${file} to ${output}`);
 
-  let path = cwd;
+  let path = '';
   let directories = output.split("/");
   directories.slice(0, directories.length - 1).forEach(directory => {
-    path += "/" + directory;
+    if (path.length > 0) {
+      path += "/";
+    }
+    path += directory;
 
-    if (!fs.existsSync(path)) {
+    if (!fs.existsSync(`${cwd}/${path}`)) {
       fs.mkdirSync(path);
     }
   });
 
-  fs.createReadStream(`${templatePath}/${file}`).pipe(fs.createWriteStream(`${cwd}/${output}`));
+  let templateParams = Object.assign({path}, inputs);
+  consolidate[lazySettings.engine](`${templatePath}/${file}`, templateParams, (err, result) => {
+    if (err) throw err;
+
+    let outputFile = fs.openSync(`${cwd}/${output}`, 'w');
+    fs.writeSync(outputFile, result);
+    fs.closeSync(outputFile);
+  });
 }
 
 

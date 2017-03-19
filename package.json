@@ -1,7 +1,7 @@
 {
-  "name": "lazy",
-  "version": "0.0.1",
-  "description": "Command Line Interface for lazy developers",
+  "name": "lazy-scaffolding",
+  "version": "0.1.0",
+  "description": "A command line scaffolding engine for any kind of project",
   "main": "index.js",
   "bin": {
     "lazy": "./lazy.js"
@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/celso-wo/lazy#readme",
   "dependencies": {
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "consolidate": "^0.14.5",
+    "ejs": "^2.5.6"
   }
 }
