@@ -23,6 +23,6 @@ console.log(); // to add new empty line in the console.
 program
   .version(version)
   .command('init', 'Create a lazy template engine project for the current folder')
-  .command('generate [template]', 'Generate files from a template')
-  .command('list', 'List all your templates for the current folder');
+  .command('generate [template]', 'Generate files from a template').alias('g')
+  .command('list', 'List all your templates for the current folder').alias('l');
 program.parse(process.argv);

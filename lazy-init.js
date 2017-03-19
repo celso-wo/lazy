@@ -25,9 +25,12 @@ if (fs.existsSync(`${cwd}/.lazy`)) {
   fs.mkdirSync(`${cwd}/.lazy/templates`);
   fs.mkdirSync(`${cwd}/.lazy/templates/sample`);
   fd = fs.openSync(`${cwd}/.lazy/templates/sample/template-settings.json`, 'w');
-  fs.writeSync(fd, "{");
-  fs.writeSync(fd, "\n");
-  fs.writeSync(fd, "}");
+  fs.writeSync(fd, '{\n');
+  fs.writeSync(fd, '  "inputs": ["filename"],\n');
+  fs.writeSync(fd, '  "outputs": {\n');
+  fs.writeSync(fd, '    "express.js": "outputFolder/%{filename}_express.js"\n');
+  fs.writeSync(fd, '  }\n');
+  fs.writeSync(fd, '}\n');
   fs.closeSync(fd);
 
   fd = fs.openSync(`${cwd}/.lazy/templates/sample/express.js`, 'w');
