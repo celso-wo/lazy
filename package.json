@@ -4,7 +4,7 @@
   "description": "Command Line Interface for lazy developers",
   "main": "index.js",
   "bin": {
-    "lazy": "./index.js"
+    "lazy": "./lazy.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/celso-wo/lazy/issues"
   },
-  "homepage": "https://github.com/celso-wo/lazy#readme"
+  "homepage": "https://github.com/celso-wo/lazy#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
