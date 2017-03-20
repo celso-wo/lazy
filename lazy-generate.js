@@ -47,12 +47,19 @@ for (let key in templateSettings.inputs) {
   inputs[templateSettings.inputs[key]] = templateArgs[key];
 }
 
+let outputs = {};
 for (let file in templateSettings.outputs) {
   let output = templateSettings.outputs[file];
 
   for (let input in inputs) {
     output = output.replace(`%{${input}}`, inputs[input]);
   }
+
+  outputs[file] = output;
+}
+
+for (let file in outputs) {
+  let output = outputs[file];
 
   console.log(`  Creating ${file} to ${output}`);
 
@@ -69,7 +76,10 @@ for (let file in templateSettings.outputs) {
     }
   });
 
-  let templateParams = Object.assign({path}, inputs);
+  let templateParams = {};
+  Object.assign(templateParams, {path, outputs});
+  Object.assign(templateParams, inputs);
+
   consolidate[lazySettings.engine](`${templatePath}/${file}`, templateParams, (err, result) => {
     if (err) throw err;
 
