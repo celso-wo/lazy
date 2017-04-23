@@ -12,7 +12,7 @@ if (fs.existsSync(`${cwd}/.lazy`)) {
 
   let files = fs.readdirSync(`${cwd}/.lazy/templates`);
   files.forEach(file => {
-    let templateSettings = JSON.parse(fs.readFileSync(`${cwd}/.lazy/templates/${file}/template-settings.json`));
+    let templateSettings = require(`${cwd}/.lazy/templates/${file}/template-settings.js`);
 
     let inputs = '';
     for (let key in templateSettings.inputs) {

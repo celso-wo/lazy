@@ -6,7 +6,7 @@
 const fs = require('fs');
 const program = require('commander');
 const cwd = process.cwd();
-const version = '0.0.1';
+const version = '0.0.3';
 
 console.log(`\n  [Lazy] Version ${version}`);
 console.log(`\n  Checking lazy configuration...`);

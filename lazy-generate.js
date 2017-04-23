@@ -28,7 +28,7 @@ const template = program.args[0];
 const templateArgs = program.args.slice(1);
 
 let templatePath = `${cwd}/.lazy/templates/${template}`;
-let templateSettings = JSON.parse(fs.readFileSync(`${templatePath}/template-settings.json`));
+let templateSettings = require(`${templatePath}/template-settings.js`);
 
 if (templateArgs.lentgh < templateSettings.inputs.length) {
   console.error('  ERROR - Missing template arguments');
@@ -50,12 +50,18 @@ for (let key in templateSettings.inputs) {
 let outputs = {};
 for (let file in templateSettings.outputs) {
   let output = templateSettings.outputs[file];
+  let outputPath = '';
 
-  for (let input in inputs) {
-    output = output.replace(`%{${input}}`, inputs[input]);
+  if (typeof output == 'function') {
+    outputPath = output(inputs);
+  } else {
+    outputPath = output;
+    for (let input in inputs) {
+      outputPath = outputPath.replace(`%{${input}}`, inputs[input]);
+    }
   }
 
-  outputs[file] = output;
+  outputs[file] = outputPath;
 }
 
 for (let file in outputs) {
@@ -79,6 +85,11 @@ for (let file in outputs) {
   let templateParams = {};
   Object.assign(templateParams, {path, outputs});
   Object.assign(templateParams, inputs);
+
+  if (fs.existsSync(`${cwd}/${output}`)) {
+    console.log(`    Destination file already exists, skiping...`);
+    continue;
+  }
 
   consolidate[lazySettings.engine](`${templatePath}/${file}`, templateParams, (err, result) => {
     if (err) throw err;

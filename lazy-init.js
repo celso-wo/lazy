@@ -26,14 +26,14 @@ fs.closeSync(fd);
 console.log("\n  Creating sample template");
 fs.mkdirSync(`${cwd}/.lazy/templates`);
 fs.mkdirSync(`${cwd}/.lazy/templates/sample`);
-fd = fs.openSync(`${cwd}/.lazy/templates/sample/template-settings.json`, 'w');
-fs.writeSync(fd, '{\n');
+fd = fs.openSync(`${cwd}/.lazy/templates/sample/template-settings.js`, 'w');
+fs.writeSync(fd, 'module.exports = {\n');
 fs.writeSync(fd, '  "inputs": ["entity"],\n');
 fs.writeSync(fd, '  "outputs": {\n');
 fs.writeSync(fd, '    "entity.ejs": "output/entity/%{entity}.java",\n');
 fs.writeSync(fd, '    "repository.ejs": "output/repository/%{entity}Repository.java"\n');
 fs.writeSync(fd, '  }\n');
-fs.writeSync(fd, '}\n');
+fs.writeSync(fd, '};\n');
 fs.closeSync(fd);
 
 fd = fs.openSync(`${cwd}/.lazy/templates/sample/entity.ejs`, 'w');
